@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSetup));
+app.use('/', taskRoute);
 app.get('/health', (req, res) => {
     res.status(200).send('Ok');
 });
