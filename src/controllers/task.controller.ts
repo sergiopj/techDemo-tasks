@@ -100,11 +100,10 @@ const updateTaskById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const data = req.body;
   try {
-    const success: boolean = await updateById(id, data);
+    const task: ITask = await updateById(id, data);
     logger.info('::updateTaskById | Incion de actualización de una task');
-    //TODO devolver la task aunque sea con dos queries
-    success
-      ? res.status(200).send({success})
+    task
+      ? res.status(200).send(task)
       : res.status(404).send({message: 'No se ha podido actualizar la task'}); 
   } catch (error) {   
     logger.error(`::updateTaskById | Error al actualizar la task ${id} - error : ${error}`);
