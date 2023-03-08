@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 export const UPDATE_TASK_OBJECT = {
   title: "title test update",

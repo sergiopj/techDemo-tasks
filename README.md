@@ -38,15 +38,15 @@ docker exec -it docker_image_name /bin/bash
 
 La API REST cuenta con los siguientes endpoints:
 
-* GET /tasks/:userId Obtiene todas las tareas de un usuario
+* GET /tasks/:userId Obtiene todas las tareas de un usuario que esten pendientes
 
 * GET /task/:id: Obtiene una tarea en particular, por el parámetro id.
 
 * POST /task: Añade una nueva tarea.   
 
-* PUT /task/:id: Actualiza una tarea existente, por el parámetro id.
+* PUT /task-update/:id: Actualiza una tarea existente, por el parámetro id.
 
-* DELETE /task/:id: Elimina una tarea existente, por el parámetro id.
+* DELETE /task-delete/:id: Elimina una tarea existente, por el parámetro id.
 
 * SWAGGER_DOCS /api-docs para poder probar los endpoints
 

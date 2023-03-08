@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import { ITask, ITaskInsert, ITaskUpdate } from '../database/models/task.model';
 import {getById, getPendingTasksByUserId, insertTask, updateById, deleteTask} from '../services/Task';
+import { Logger } from '../services/Logger';
+const logger = Logger.getLogger('task.controller');
 
 /**
   * Controlador todas las tareas pendientes
@@ -14,10 +16,12 @@ const getPendingTasks = async (req: Request, res: Response) => {
     const { userId } = req.params ;
     try { 
       const data: ITask[] = await getPendingTasksByUserId(parseInt(userId)); 
+      logger.info('::getPendingTasks | Inicio de obtencion de todos los task pendientes');
       data 
           ? res.status(200).send({data, count: data.length})
           : res.status(404).send({message: 'Tasks pendientes no encontradas'});
-    } catch (error: unknown) {     
+    } catch (error: unknown) {  
+      logger.error(`::getPendingTasks | Error al obtener todas los task pendientes - error : ${error}`);   
       res.status(500).send({message: 'Error al obtener las tasks pendientes'});
     }
 };
@@ -33,10 +37,12 @@ const getTaskById = async (req: Request, res: Response) => {
     const { id } = req.params ;
     try {
       const data: ITask = await getById(parseInt(id));
+      logger.info(`::getTaskById | Inicio de obtencion de task por id : ${id}`);
       data 
           ? res.status(200).send(data)
           : res.status(404).send({message: 'Task no encontrada'}); 
     } catch (error) {     
+      logger.error(`::getTaskById | Error al obtener la task - error : ${error}`);
       res.status(500).send({message: `Error al obtener la task por id : ${id}`});
     }
 };
@@ -52,9 +58,13 @@ const deleteTaskById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const success: boolean = await deleteTask(parseInt(id));  
-    return res.status(200).send({eliminated: success});
+    logger.info(`::deleteTaskById | Inicio de de eliminacion de task por id : ${id}`);
+    success 
+      ? res.status(200).send({eliminated: success})
+      : res.status(404).send({message: 'Task a eliminar no encontrada'}); 
   } catch (error) {   
-    res.status(500).send({message: 'Error al elmininar la noticia'});
+    logger.error(`::deleteTaskById | Error al eliminar la task ${id} - error : ${error}`);
+    res.status(500).send({message: 'Error al elmininar la task'});
   }
 };
 
@@ -68,8 +78,13 @@ const addNewTask = async (req: Request, res: Response) => {
   try {
     const data = req.body;
     const result: ITaskInsert = await insertTask(data);
-    res.status(200).send(result);
+    logger.info('::addNewTask | Inicio de insercion de una task');
+    result 
+      ? res.status(200).send(result)
+      : res.status(404).send({message: 'No se ha podido añadir la task'}); 
+
   } catch (error) {
+    logger.error(`::addNewTask | Error al añadir la nueva task - error : ${error}`);
     res.status(500).send({message: 'Error al añadir la nueva task'});
   }
 };
@@ -78,7 +93,7 @@ const addNewTask = async (req: Request, res: Response) => {
  * Controlador actualiza un task existente por id
  * @param req 
  * @param res 
- * @returns {ITask}
+ * @returns {Json}
  */
   
 const updateTaskById = async (req: Request, res: Response) => {
@@ -86,8 +101,13 @@ const updateTaskById = async (req: Request, res: Response) => {
   const data = req.body;
   try {
     const success: boolean = await updateById(id, data);
-    res.status(200).send({success}); 
+    logger.info('::updateTaskById | Incion de actualización de una task');
+    //TODO devolver la task aunque sea con dos queries
+    success
+      ? res.status(200).send({success})
+      : res.status(404).send({message: 'No se ha podido actualizar la task'}); 
   } catch (error) {   
+    logger.error(`::updateTaskById | Error al actualizar la task ${id} - error : ${error}`);
     res.status(500).send({message: 'Error al actualizar la task'});
   }
 };
