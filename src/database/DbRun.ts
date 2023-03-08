@@ -1,3 +1,5 @@
+import { Logger } from '../services/Logger';
+const logger = Logger.getLogger('DbRun');
 import { Dialect, Sequelize } from 'sequelize';
 import { Task } from './models/task.model';
 
@@ -11,10 +13,10 @@ export class DBConfig {
     (async () => {
       try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        logger.info('Connection has been established successfully.');
         await Task.sync();
       } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        logger.error('Unable to connect to the database:', error);
       }
     })();
   }
