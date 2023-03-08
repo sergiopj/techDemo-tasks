@@ -1,15 +1,7 @@
 
 # API REST task-app 
 
-API REST desarrollada en Node.js y TypeScript..........
-
-## Instalación
-Para instalar las dependencias del proyecto, ejecuta el siguiente comando en la terminal:
-
-```console
-npm install
-```
-
+API REST desarrollada en Node.js y TypeScript para la gestión de tareas de usuarios
 ## Levantar la Aplicación:
 
 Requisitos previos si se quiere levantar la app en un contenedor docker:
