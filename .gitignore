@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+lib
+.vscode
+logs
+npm-debug.log
+.DS_Store
+build
+database.sqlite

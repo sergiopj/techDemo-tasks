@@ -1,0 +1,60 @@
+
+# API REST task-app 
+
+API REST desarrollada en Node.js y TypeScript..........
+
+## Instalación
+Para instalar las dependencias del proyecto, ejecuta el siguiente comando en la terminal:
+
+```console
+npm install
+```
+
+## Levantar la Aplicación:
+
+Requisitos previos si se quiere levantar la app en un contenedor docker:
+
+* Tener instalado docker-compose y docker.
+* Modificar el .env de la raíz con los siguientes valores:
+
+```console
+/* DATABASE */
+DIALECT=sqlite
+STORAGE=./src/database/database.sqlite
+```
+
+Se puede levantar la aplicacion en un contenedor docker, para ello simplemente en la raiz del proyecto, ejecutar el comando:
+
+```console
+docker-compose up --build
+```
+_Nota: Si se quiere acceder al sistema de archivos del contenedor para verificar por ejemplo los logs o la creación de la db, se ha de ejecutar el siguiente comando:_
+
+```console
+docker exec -it docker_image_name /bin/bash
+```
+
+## Endpoints
+
+La API REST cuenta con los siguientes endpoints:
+
+* GET /tasks/:userId Obtiene todas las tareas de un usuario
+
+* GET /task/:id: Obtiene una tarea en particular, por el parámetro id.
+
+* POST /task: Añade una nueva tarea.   
+
+* PUT /task/:id: Actualiza una tarea existente, por el parámetro id.
+
+* DELETE /task/:id: Elimina una tarea existente, por el parámetro id.
+
+* SWAGGER_DOCS /api-docs para poder probar los endpoints
+
+## Test unitarios
+
+Como lanzarlos de forma general:
+
+```console
+npm test
+```
+
