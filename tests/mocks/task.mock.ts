@@ -13,4 +13,8 @@ export const INSERT_TASK_OBJECT = {
   pending: true
 };
 
+export const INSERT_TASK_OBJECT_INCOMPLETE = {
+  userId: 1234  
+};
+
 

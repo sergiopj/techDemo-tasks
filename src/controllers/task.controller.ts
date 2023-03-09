@@ -19,10 +19,10 @@ const getPendingTasks = async (req: Request, res: Response) => {
       logger.info('::getPendingTasks | Inicio de obtencion de todos los task pendientes');
       data 
           ? res.status(200).send({data, count: data.length})
-          : res.status(404).send({message: 'Tasks pendientes no encontradas'});
+          : res.status(404).send({msg: 'Tasks pendientes no encontradas'});
     } catch (error: unknown) {  
       logger.error(`::getPendingTasks | Error al obtener todas los task pendientes - error : ${error}`);   
-      res.status(500).send({message: 'Error al obtener las tasks pendientes'});
+      res.status(500).send({msg: 'Error al obtener las tasks pendientes'});
     }
 };
   
@@ -40,10 +40,10 @@ const getTaskById = async (req: Request, res: Response) => {
       logger.info(`::getTaskById | Inicio de obtencion de task por id : ${id}`);
       data 
           ? res.status(200).send(data)
-          : res.status(404).send({message: 'Task no encontrada'}); 
+          : res.status(404).send({msg: 'Task no encontrada'}); 
     } catch (error) {     
       logger.error(`::getTaskById | Error al obtener la task - error : ${error}`);
-      res.status(500).send({message: `Error al obtener la task por id : ${id}`});
+      res.status(500).send({msg: `Error al obtener la task por id : ${id}`});
     }
 };
 
@@ -61,10 +61,10 @@ const deleteTaskById = async (req: Request, res: Response) => {
     logger.info(`::deleteTaskById | Inicio de de eliminacion de task por id : ${id}`);
     success 
       ? res.status(200).send({eliminated: success})
-      : res.status(404).send({message: 'Task a eliminar no encontrada'}); 
+      : res.status(404).send({msg: 'Task a eliminar no encontrada'}); 
   } catch (error) {   
     logger.error(`::deleteTaskById | Error al eliminar la task ${id} - error : ${error}`);
-    res.status(500).send({message: 'Error al elmininar la task'});
+    res.status(500).send({msg: 'Error al elmininar la task'});
   }
 };
 
@@ -82,10 +82,10 @@ const addNewTask = async (req: Request, res: Response) => {
     //TODO revisar bien todos los statuscode
     result 
       ? res.status(201).send(result)
-      : res.status(404).send({message: 'No se ha podido añadir la task'}); 
+      : res.status(404).send({msg: 'No se ha podido añadir la task'}); 
   } catch (error) {
     logger.error(`::addNewTask | Error al añadir la nueva task - error : ${error}`);
-    res.status(500).send({message: 'Error al añadir la nueva task'});
+    res.status(500).send({msg: 'Error al añadir la nueva task'});
   }
 };
 
@@ -104,10 +104,10 @@ const updateTaskById = async (req: Request, res: Response) => {
     logger.info('::updateTaskById | Incion de actualización de una task');
     task
       ? res.status(201).send(task)
-      : res.status(404).send({message: 'No se ha podido actualizar la task'}); 
+      : res.status(404).send({msg: 'No se ha podido actualizar la task'}); 
   } catch (error) {   
     logger.error(`::updateTaskById | Error al actualizar la task ${id} - error : ${error}`);
-    res.status(500).send({message: 'Error al actualizar la task'});
+    res.status(500).send({msg: 'Error al actualizar la task'});
   }
 };
 
