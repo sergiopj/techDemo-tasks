@@ -1,5 +1,5 @@
 import { Logger } from '../../src/services/Logger';
-import { OBJECT_LOGGER } from './mocks/logger.mock';
+import { OBJECT_LOGGER } from '../mocks/logger.mock';
 
 describe("LoggerService", () => {
     it("Para de generar un logger basico", () => {

@@ -105,7 +105,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
         responses: {
-          "200": {
+          "201": {
             description: "New Task item returned successfully",          
           },          
           "500": {
@@ -141,7 +141,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         ],
         responses: {
-          "200": {
+          "201": {
             description: "Task updated item status returned successfully",            
           },          
           "500": {
