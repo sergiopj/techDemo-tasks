@@ -1,7 +1,8 @@
+'use strict';
 import { Logger } from '../services/Logger';
-const logger = Logger.getLogger('DbRun');
 import { Dialect, Sequelize } from 'sequelize';
 import { Task } from './models/task.model';
+const logger = Logger.getLogger('DbRun');
 
 export class DBConfig {
   static async connectDB() {

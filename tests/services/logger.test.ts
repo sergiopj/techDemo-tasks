@@ -1,10 +1,11 @@
+'use strict';
 import { Logger } from '../../src/services/Logger';
-import { OBJECT_LOGGER } from '../mocks/logger.mock';
+import { OBJECT_LOGGER } from '../common/mocks/logger.mock';
 
 describe("LoggerService", () => {
     it("Para de generar un logger basico", () => {
       // Generar un logger y verificar que no es nulo o indefinido
-      const logger = Logger.getLogger('::TEST | mensaje de log de testeo');
+      const logger: Logger = Logger.getLogger('::TEST | mensaje de log de testeo');
       expect(logger).toBeDefined();
       expect(logger).not.toBeNull();
   

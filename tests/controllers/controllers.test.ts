@@ -1,8 +1,10 @@
+'use strict';
 import request from 'supertest';
 import app from '../../src/app';
 import { ITask } from '../../src/database/models/task.model';
 import { IParamsValidator } from '../../src/database/models/responses.model';
-import {UPDATE_TASK_OBJECT, INSERT_TASK_OBJECT, INSERT_TASK_OBJECT_INCOMPLETE } from '../mocks/task.mock';
+import { UPDATE_TASK_OBJECT, INSERT_TASK_OBJECT, INSERT_TASK_OBJECT_INCOMPLETE } from '../common/mocks/task.mock';
+import { expectValidatorTasks, expectValidatorResponses } from '../common/utils.test';
 
 describe('Controllers endpoints pruebas de los distintos metodos', () => {
 
@@ -13,56 +15,28 @@ describe('Controllers endpoints pruebas de los distintos metodos', () => {
     const response = await request(app).post('/task').send(INSERT_TASK_OBJECT);
     expect(response.status).toBe(201);
     const task: ITask = response.body;
-    taskId = response.body.id;
-    userId = response.body.userId;
-    expect(task).toHaveProperty('id');
-    expect(typeof task.id).toBe('number');
-    expect(task).toHaveProperty('userId');
-    expect(typeof task.userId).toBe('number');
-    expect(task).toHaveProperty('title');
-    expect(typeof task.title).toBe('string');
-    expect(task).toHaveProperty('description');
-    expect(typeof task.description).toBe('string');
-    expect(task).toHaveProperty('pending');
-    expect(typeof task.pending).toBe('boolean');
+    taskId = response.body?.id;
+    userId = response.body?.userId;
+    expectValidatorTasks(task);
   });
 
   it('POST /task no puede añadir una nueva task | 404 status code', async () => {
     const response = await request(app).post('/task').send(INSERT_TASK_OBJECT_INCOMPLETE);
     expect(response.status).toBe(400);
-    const result: IParamsValidator[] = response.body.errors;  
+    const result: IParamsValidator[] = response.body?.errors;  
     expect(Array.isArray(result)).toBe(true);
-    result.forEach((elem: IParamsValidator) => {
-      expect(elem).toHaveProperty('msg');
-      expect(typeof elem.msg).toBe('string');
-      expect(elem).toHaveProperty('param');
-      expect(typeof elem.msg).toBe('string');
-      expect(elem).toHaveProperty('location');
-      expect(typeof elem.location).toBe('string');
-    })    
+    // validacion funcional
+    result.forEach(expectValidatorResponses);    
   });
   
 
   it('GET /tasks/:userId retornada un array de tasks | 200 status code', async () => {
     const response = await request(app).get(`/tasks/${userId}`);
-    //TODO revisar mas posibles tipados de este tipo etc
     const { data, count }: { data: ITask[], count: number } = response.body;
     expect(response.status).toBe(200);
     expect(Array.isArray(data)).toBe(true);
     expect(typeof count).toBe('number');
-    //TODO hacer una funcion para comprobar los tipo itask aqui y en otros test
-    data.forEach((task: ITask) => {
-      expect(task).toHaveProperty('id');
-      expect(typeof task.id).toBe('number');
-      expect(task).toHaveProperty('userId');
-      expect(typeof task.userId).toBe('number');
-      expect(task).toHaveProperty('title');
-      expect(typeof task.title).toBe('string');
-      expect(task).toHaveProperty('description');
-      expect(typeof task.description).toBe('string');
-      expect(task).toHaveProperty('pending');
-      expect(typeof task.pending).toBe('number');
-    });    
+    data.forEach(expectValidatorTasks);   
   });
 
   it('GET /task/:id no puede obtener una task por id | 404 status code', async () => {
@@ -78,15 +52,7 @@ describe('Controllers endpoints pruebas de los distintos metodos', () => {
     const response = await request(app).put(`/task-update/${taskId}`).send(UPDATE_TASK_OBJECT);
     expect(response.status).toBe(201);
     const task: ITask = response.body;
-      expect(typeof task.id).toBe('number');
-      expect(task).toHaveProperty('userId');
-      expect(typeof task.userId).toBe('number');
-      expect(task).toHaveProperty('title');
-      expect(typeof task.title).toBe('string');
-      expect(task).toHaveProperty('description');
-      expect(typeof task.description).toBe('string');
-      expect(task).toHaveProperty('pending');
-      expect(typeof task.pending).toBe('number');
+    expectValidatorTasks(task);  
   });  
 
   it('PUT /task/:id no puede actualizar una task por id | 400 status code', async () => {

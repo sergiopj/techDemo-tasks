@@ -4,12 +4,13 @@ import DbQueries from './DbQueries';
 
 /**
  * Función para obtener todos los task
- * @returns {Promise<Object>}
+ * @param userId - Identificador del user
+ * @returns {Promise<ITask[]>}
  */
 
 const getPendingTasksByUserId = async (userId: number): Promise<ITask[]> => {
   try {
-    const querie = {
+    const querie: object = {
       where: {
         userId,
         pending: 1,
@@ -30,6 +31,7 @@ const getPendingTasksByUserId = async (userId: number): Promise<ITask[]> => {
 
 /**
  * Función para obtener una task por id
+ * @param id - Identificador de la task
  * @returns {Promise<ITask>}
  */
 const getById = async (id: number): Promise<ITask> => {
@@ -48,6 +50,7 @@ const getById = async (id: number): Promise<ITask> => {
 
 /**
  * Función para eliminar una task por id
+ * @param id - Identificador de la task
  * @returns {Promise<boolean>}
  */
 const deleteTask = async (id: number): Promise<boolean> => {
@@ -64,7 +67,8 @@ const deleteTask = async (id: number): Promise<boolean> => {
 
 /**
  * Función para añadir una task
- * @returns {Promise<INews>}
+ * @param data - Datos de la task a actualizar
+ * @returns {Promise<Itask>}
  */
 const insertTask = async (data: ITaskInsert): Promise<ITask> => {
   //TODO revisar por que se insertan fechas con una hora anterior a la española
@@ -81,6 +85,8 @@ const insertTask = async (data: ITaskInsert): Promise<ITask> => {
 
 /**
  * Función para actualizar una task
+ * @param id - Identificador de la tarea
+ * @param data - Datos de la tarea a actualizar
  * @returns {Promise<Itask>}
  */
 const updateById = async (id: string, data: ITaskUpdate): Promise<any> => {
@@ -89,7 +95,7 @@ const updateById = async (id: string, data: ITaskUpdate): Promise<any> => {
     //TODO intentar devolverlo con la consulta de update y no hacer dos con un returning = true
     if(updated === 1) {
       const task: Task | null = await DbQueries.findElemById(parseInt(id));      
-      return task || {};        
+      return task;        
     }      
   } catch (error) {
     const message: string = error instanceof Error

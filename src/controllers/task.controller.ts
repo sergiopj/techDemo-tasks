@@ -79,7 +79,6 @@ const addNewTask = async (req: Request, res: Response) => {
     const data = req.body;
     const result: ITaskInsert = await insertTask(data);
     logger.info('::addNewTask | Inicio de insercion de una task');
-    //TODO revisar bien todos los statuscode
     result 
       ? res.status(201).send(result)
       : res.status(404).send({msg: 'No se ha podido añadir la task'}); 

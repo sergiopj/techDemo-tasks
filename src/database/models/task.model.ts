@@ -1,3 +1,4 @@
+'use strict';
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize({
