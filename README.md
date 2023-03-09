@@ -7,7 +7,7 @@ API REST desarrollada en Node.js y TypeScript para la gestión de tareas de usua
 Requisitos previos si se quiere levantar la app en un contenedor docker:
 
 * Tener instalado docker-compose y docker.
-* Modificar el .env de la raíz con los siguientes valores:
+* Añadir un fichero .env de la raíz con los siguientes valores:
 
 ```console
 /* DATABASE */

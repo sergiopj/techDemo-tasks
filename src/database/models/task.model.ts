@@ -14,7 +14,10 @@ export interface ITask {
   pending: boolean;
   createdAt: string;
   updatedAt: string;
-  dataValues?: ITask
+}
+
+export interface ITaskWithDataValues extends ITask {
+  dataValues: ITask
 }
 
 export interface ITaskInsert extends ITaskUpdate {

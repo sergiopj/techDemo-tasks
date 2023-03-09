@@ -1,8 +1,6 @@
 'use strict';
 import { ITask, ITaskInsert, ITaskUpdate, Task } from '../database/models/task.model';
 import DbQueries from './DbQueries';
-import { Logger } from './Logger';
-const logger = Logger.getLogger('Task');
 
 /**
  * Función para obtener todos los task
@@ -49,7 +47,7 @@ const getById = async (id: number): Promise<ITask> => {
 };
 
 /**
- * Función para eliminar una noticia por id
+ * Función para eliminar una task por id
  * @returns {Promise<boolean>}
  */
 const deleteTask = async (id: number): Promise<boolean> => {
@@ -65,10 +63,11 @@ const deleteTask = async (id: number): Promise<boolean> => {
 };
 
 /**
- * Función para añadir una noticia
+ * Función para añadir una task
  * @returns {Promise<INews>}
  */
 const insertTask = async (data: ITaskInsert): Promise<ITask> => {
+  //TODO revisar por que se insertan fechas con una hora anterior a la española
   try {
     const taskData: ITask = await DbQueries.insertData(data);
     return taskData;

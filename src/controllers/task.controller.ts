@@ -79,10 +79,10 @@ const addNewTask = async (req: Request, res: Response) => {
     const data = req.body;
     const result: ITaskInsert = await insertTask(data);
     logger.info('::addNewTask | Inicio de insercion de una task');
+    //TODO revisar bien todos los statuscode
     result 
-      ? res.status(200).send(result)
+      ? res.status(201).send(result)
       : res.status(404).send({message: 'No se ha podido añadir la task'}); 
-
   } catch (error) {
     logger.error(`::addNewTask | Error al añadir la nueva task - error : ${error}`);
     res.status(500).send({message: 'Error al añadir la nueva task'});
@@ -103,7 +103,7 @@ const updateTaskById = async (req: Request, res: Response) => {
     const task: ITask = await updateById(id, data);
     logger.info('::updateTaskById | Incion de actualización de una task');
     task
-      ? res.status(200).send(task)
+      ? res.status(201).send(task)
       : res.status(404).send({message: 'No se ha podido actualizar la task'}); 
   } catch (error) {   
     logger.error(`::updateTaskById | Error al actualizar la task ${id} - error : ${error}`);
