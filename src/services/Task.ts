@@ -71,7 +71,7 @@ const deleteTask = async (id: number): Promise<boolean> => {
  * @returns {Promise<Itask>}
  */
 const insertTask = async (data: ITaskInsert): Promise<ITask> => {
-  //TODO revisar por que se insertan fechas con una hora anterior a la española
+  //TODO hablar en entrevista inserta una hora menos
   try {
     const taskData: ITask = await DbQueries.insertData(data);
     return taskData;
@@ -92,7 +92,7 @@ const insertTask = async (data: ITaskInsert): Promise<ITask> => {
 const updateById = async (id: string, data: ITaskUpdate): Promise<any> => {
   try {   
     const [updated]: number[] = await DbQueries.findOneAndUpdate(parseInt(id), data);
-    //TODO intentar devolverlo con la consulta de update y no hacer dos con un returning = true
+    //TODO hablar en entrevista devolverlo con la consulta de update y no hacer dos con un returning = true
     if(updated === 1) {
       const task: Task | null = await DbQueries.findElemById(parseInt(id));      
       return task;        
